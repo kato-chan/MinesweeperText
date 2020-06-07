@@ -1,5 +1,4 @@
 import random
-import sys
 
 game = 1
 height = 8
@@ -79,67 +78,67 @@ def buildBoard(width, height, bombs):
 
 
 def uncover (initialBoard, endList, i, j, width, height):
-    if i==0:
-        if j==0:
-            initialBoard[i][j] = endList[i][j]
-            initialBoard[i][j + 1] = endList[i][j + 1]
-            initialBoard[i + 1][j] = endList[i + 1][j]
-            initialBoard[i + 1][j + 1] = endList[i + 1][j + 1]
-        elif j==width-1:
-            initialBoard[i][j] = endList[i][j]
-            initialBoard[i][j - 1] = endList[i][j - 1]
-            initialBoard[i + 1][j] = endList[i + 1][j]
-            initialBoard[i + 1][j - 1] = endList[i + 1][j - 1]
+    if i > 0 and j > 0:
+        if str(endList[i - 1][j - 1]) == "0" and str(initialBoard[i - 1][j - 1]) == "x":
+            initialBoard[i - 1][j - 1] = endList[i - 1][j - 1]
+            a = i -1;
+            b = j - 1;
+            uncover(initialBoard, endList, a, b, width, height)
         else:
-            initialBoard[i][j] = endList[i][j]
-            initialBoard[i][j - 1] = endList[i][j - 1]
-            initialBoard[i][j + 1] = endList[i][j + 1]
-            initialBoard[i + 1][j] = endList[i + 1][j]
-            initialBoard[i + 1][j - 1] = endList[i + 1][j - 1]
-            initialBoard[i + 1][j + 1] = endList[i + 1][j + 1]
-    elif i==height-1:
-        if j==0:
-            initialBoard[i][j] = endList[i][j]
-            initialBoard[i][j + 1] = endList[i][j + 1]
-            initialBoard[i - 1][j] = endList[i - 1][j]
-            initialBoard[i - 1][j + 1] = endList[i - 1][j + 1]
-        elif j==width-1:
-            initialBoard[i][j] = endList[i][j]
-            initialBoard[i][j - 1] = endList[i][j - 1]
-            initialBoard[i - 1][j] = endList[i - 1][j]
             initialBoard[i - 1][j - 1] = endList[i - 1][j - 1]
+    if i > 0:
+        if str(endList[i - 1][j]) == "0" and str(initialBoard[i - 1][j]) == "x":
+            initialBoard[i - 1][j] = endList[i - 1][j]
+            c = i -1
+            uncover(initialBoard, endList, c, j, width, height)
         else:
-            initialBoard[i][j] = endList[i][j]
-            initialBoard[i][j - 1] = endList[i][j - 1]
-            initialBoard[i][j + 1] = endList[i][j + 1]
             initialBoard[i - 1][j] = endList[i - 1][j]
-            initialBoard[i - 1][j - 1] = endList[i - 1][j - 1]
+    if i > 0 and j < width - 1:
+        if str(endList[i - 1][j + 1]) == "0" and str(initialBoard[i - 1][j + 1]) == "x":
             initialBoard[i - 1][j + 1] = endList[i - 1][j + 1]
-    else:
-        if j==0:
-            initialBoard[i][j] = endList[i][j]
-            initialBoard[i][j + 1] = endList[i][j + 1]
-            initialBoard[i - 1][j] = endList[i - 1][j]
-            initialBoard[i + 1][j] = endList[i + 1][j]
-            initialBoard[i - 1][j + 1] = endList[i - 1][j + 1]
-            initialBoard[i + 1][j + 1] = endList[i + 1][j + 1]
-        elif j==width-1:
-            initialBoard[i][j] = endList[i][j]
-            initialBoard[i][j - 1] = endList[i][j - 1]
-            initialBoard[i + 1][j] = endList[i + 1][j]
-            initialBoard[i + 1][j - 1] = endList[i + 1][j - 1]
-            initialBoard[i - 1][j] = endList[i - 1][j]
-            initialBoard[i - 1][j - 1] = endList[i - 1][j - 1]
+            d = i - 1
+            e = j + 1
+            uncover(initialBoard, endList, d, e, width, height)
         else:
-            initialBoard[i][j] = endList[i][j]
-            initialBoard[i][j - 1] = endList[i][j - 1]
-            initialBoard[i][j + 1] = endList[i][j + 1]
-            initialBoard[i - 1][j] = endList[i - 1][j]
-            initialBoard[i - 1][j - 1] = endList[i - 1][j - 1]
             initialBoard[i - 1][j + 1] = endList[i - 1][j + 1]
-            initialBoard[i + 1][j] = endList[i + 1][j]
+    if j > 0:
+        if str(endList[i][j - 1]) == "0" and str(initialBoard[i][j - 1]) == "x":
+            initialBoard[i][j - 1] = endList[i][j - 1]
+            f = j - 1
+            uncover(initialBoard, endList, i, f, width, height)
+        else:
+            initialBoard[i][j - 1] = endList[i][j - 1]
+    if j > 0 and i < height -1:
+        if str(endList[i + 1][j - 1]) == "0" and str(initialBoard[i + 1][j - 1]) == "x":
             initialBoard[i + 1][j - 1] = endList[i + 1][j - 1]
+            g = i + 1
+            h = j - 1
+            uncover(initialBoard, endList, g, h, width, height)
+        else:
+            initialBoard[i + 1][j - 1] = endList[i + 1][j - 1]
+    if j < width - 1:
+        if str(endList[i][j + 1]) == "0" and str(initialBoard[i][j + 1]) == "x":
+            initialBoard[i][j + 1] = endList[i][j + 1]
+            k = j + 1
+            uncover(initialBoard, endList, i, k, width, height)
+        else:
+            initialBoard[i][j + 1] = endList[i][j + 1]
+    if i < height - 1:
+        if str(endList[i + 1][j]) == "0" and str(initialBoard[i + 1][j]) == "x":
+            initialBoard[i + 1][j] = endList[i + 1][j]
+            l = i + 1
+            uncover(initialBoard, endList, l, j, width, height)
+        else:
+            initialBoard[i + 1][j] = endList[i + 1][j]
+    if i < height - 1 and j < width - 1:
+        if str(endList[i + 1][j + 1]) == "0" and str(initialBoard[i + 1][j + 1]) == "x":
             initialBoard[i + 1][j + 1] = endList[i + 1][j + 1]
+            m = i + 1
+            n = j + 1
+            uncover(initialBoard, endList, m, n, width, height)
+        else:
+            initialBoard[i + 1][j + 1] = endList[i + 1][j + 1]
+
 
 print("Welcome to Minesweeper!\n")
 
@@ -185,51 +184,8 @@ while game == 1:
             if str(endList[userX - 1][userY - 1]) == "*":
                 break
             elif str(endList[userX - 1][userY - 1]) == "0":
-                if userX - 1 < height-1:
-                    for i in range(userX - 1, maxH):
-                        j = userY - 1
-                        if i == userX-1:
-                            while j < width and str(endList[i][j]) == "0":
-                                uncover(initialBoard, endList, i, j, width, height)
-                                j += 1
-                        else:
-                            while j < width:
-                                if str(initialBoard[i][j]) == "0":
-                                    uncover(initialBoard, endList, i, j, width, height)
-                                j += 1
-                        j = userY - 1
-                        if i == userX - 1:
-                            while j >= 0 and str(endList[i][j]) == "0":
-                                uncover(initialBoard, endList, i, j, width, height)
-                                j -= 1
-                        else:
-                            while j >= 0:
-                                if str(initialBoard[i][j]) == "0":
-                                    uncover(initialBoard, endList, i, j, width, height)
-                                j -= 1
-
-                if userX-1 > 0:
-                    for l in range(userX - 1, -1, -1):
-                        j = userY - 1
-                        if l == userX - 1:
-                            while j < width and str(endList[l][j]) == "0":
-                                uncover(initialBoard, endList, l, j, width, height)
-                                j += 1
-                        else:
-                            while j < width:
-                                if str(initialBoard[l][j]) == "0":
-                                    uncover(initialBoard, endList, l, j, width, height)
-                                j += 1
-                        j = userY - 1
-                        if l == userX - 1:
-                            while j >= 0 and str(endList[l][j]) == "0":
-                                uncover(initialBoard, endList, l, j, width, height)
-                                j -= 1
-                        else:
-                            while j >= 0:
-                                if str(initialBoard[l][j]) == "0":
-                                    uncover(initialBoard, endList, l, j, width, height)
-                                j -= 1
+                initialBoard[userX - 1][userY - 1] = endList[userX - 1][userY - 1]
+                uncover(initialBoard, endList, userX - 1, userY - 1, width, height)
             else:
                 initialBoard[userX - 1][userY - 1] = endList[userX - 1][userY - 1]
         else:
@@ -268,10 +224,6 @@ while game == 1:
         game = 0
 
 print ("Thank you for playing!")
-
-
-
-
 
 
 
